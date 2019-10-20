@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Записная книжка</title>
+    <script src="/js/main.js"></script>
+</head>
+<body>
+    <div id="todo-form">
+        <form>
+            <h2>Добавление нового дела</h2>
+            <label>Выберите дату:</label>
+            <input type="date" name="calendar">
+            <label>Описание:</label>
+            <input type="text" name="thingToDo" value="">
+            <hr>
+            <button id="save-task">Записать</button>
+        </form>
+    </div>
+    <h1>Список дел</h1>
+    <button id="show-add-task-form">Добавить задачу</button>
+    <br><br>
+    <div id="task-list">
+        <div each="task : ${tasks}">
+            <a href="#" class="task-link" attr="data-id=${task.id}" text="${task.name}"></a><span></span>
+            <a href="#" class="task-del" attr="data-id=${task.id}" text="delete"></a>
+        </div>
+    </div>
+</body>
+</html>
