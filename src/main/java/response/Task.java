@@ -1,11 +1,20 @@
 package response;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
 
+//@Entity
 public class Task {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int Id;
+
     private String date;
-    private String thingToDo;
+
+    private String note;
 
     public int getId() {
         return Id;
@@ -23,11 +32,11 @@ public class Task {
         this.date = date;
     }
 
-    public String getThingToDo() {
-        return thingToDo;
+    public String getNote() {
+        return note;
     }
 
-    public void setThingToDo(String thingToDo) {
-        this.thingToDo = thingToDo;
+    public void setNote(String note) {
+        this.note = note;
     }
 }

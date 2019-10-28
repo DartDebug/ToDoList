@@ -9,19 +9,19 @@ import java.util.Map;
 
 public class Storage {
     private static int currentId = 1;
-    private static Map<Integer, Task> toDoHashMap = new HashMap<>();
-    public static int addRecord(Task task) {
+    private static Map<Integer, Task> tasksHashMap = new HashMap<>();
+    public static int addTask(Task task) {
         int id = currentId++;
         task.setId(id);
-        toDoHashMap.put(id, task);
+        tasksHashMap.put(id, task);
         return id;
     }
 
     public static List<Task> getTasks() {
-        return new ArrayList<>(toDoHashMap.values());
+        return new ArrayList<>(tasksHashMap.values());
     }
 
     public static Task getTask(int taskId) {
-        return toDoHashMap.getOrDefault(taskId, null);
+        return tasksHashMap.getOrDefault(taskId, null);
     }
 }
