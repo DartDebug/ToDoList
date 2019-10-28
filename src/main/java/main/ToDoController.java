@@ -1,18 +1,20 @@
 package main;
 
-//import main.model.TaskRepository;
+import main.model.TaskRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import response.Task;
+import main.model.Task;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ToDoController {
 
-//    @Autowired
-//    private TaskRepository taskRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
     @GetMapping("/tasks/")
     public List<Task> list() {
@@ -21,14 +23,14 @@ public class ToDoController {
 
     @PostMapping("/tasks/")
     public int add(Task task) {
-        return Storage.addTask(task);
-//        Task newTask = taskRepository.save(task);
-//        return newTask.getId();
+        Task newTask = taskRepository.save(task);
+        return newTask.getId();
     }
 
     @GetMapping("/tasks/{id}")
     public ResponseEntity get(@PathVariable int id) {
-        Task task = Storage.getTask(id);
+//        Task task = Storage.getTask(id);
+        Optional optionalTask = taskRepository.findById(id);
         if (task == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         else return new ResponseEntity(task, HttpStatus.OK);
     }

@@ -1,6 +1,6 @@
 $(function () {
     const appendTask = function (data) {
-        let taskCode = '<h4>' + data.note + '</h4>' + 'Сделать до ' + data.date;
+        let taskCode = '<a href="#" class="task-link" data-id="' + data.id + '">' + data.note + '</a><br>';
         $('#task-list').append('<div>' + taskCode + '</div>');
         };
 
@@ -23,6 +23,26 @@ $(function () {
         }
     });
 
+    //Getting task
+    $(document).on('click', '.task-link', function () {
+        let link = $(this);
+        let taskId = link.data('id');
+        $.ajax({
+            method: "GET",
+            url: '/tasks/' + taskId,
+            success: function (response) {
+                let code = '<span>Сделать до ' + response.date + ' </span>';
+                link.parent().append(code);
+            },
+            error: function (response) {
+                if(response.status == 404) {
+                    alert('Заметка не найдена');
+                }
+            }
+        });
+        return false;
+    })
+
     //Adding task
     $('#save-task').click(function () {
         let data = $('#todo-form form').serialize();
@@ -33,7 +53,7 @@ $(function () {
             success: function (response) {
                 $('#todo-form').css('display', 'none');
                 let task = {};
-                task.id = response.id;
+                task.id = response;
                 let dataArray = $('#todo-form form').serializeArray();
                 for(let i in dataArray) {
                     task[dataArray[i]['name']] = dataArray[i]['value'];
