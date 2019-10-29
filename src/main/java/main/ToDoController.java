@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import main.model.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +19,12 @@ public class ToDoController {
 
     @GetMapping("/tasks/")
     public List<Task> list() {
-        return Storage.getTasks();
+        Iterable<Task> taskIterable = taskRepository.findAll();
+        List<Task> tasks = new ArrayList<>();
+        for (var task : taskIterable) {
+            tasks.add(task);
+        }
+        return tasks;
     }
 
     @PostMapping("/tasks/")
@@ -29,9 +35,8 @@ public class ToDoController {
 
     @GetMapping("/tasks/{id}")
     public ResponseEntity get(@PathVariable int id) {
-//        Task task = Storage.getTask(id);
-        Optional optionalTask = taskRepository.findById(id);
-        if (task == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        else return new ResponseEntity(task, HttpStatus.OK);
+        Optional<Task> optionalTask = taskRepository.findById(id);
+        if(!optionalTask.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        else return new ResponseEntity(optionalTask.get(), HttpStatus.OK);
     }
 }
