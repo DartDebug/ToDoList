@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Записная книжка</title>
@@ -19,11 +19,14 @@
             <button id="save-task">Записать</button>
         </form>
     </div>
-    <h1>Список дел</h1>
+    <h1>Список дел(<span th:text="${tasksCount}">0</span>)</h1>
     <button id="show-add-task-form">Добавить задачу</button>
     <br><br>
     <div id="task-list">
-
+        <div th:each="task : ${tasks}">
+            <a href="#" class="task-link" th:attr="data-id=${task.id}" th:text="${task.note}"></a>
+            <a href="#" class="task-del" th:attr="data-id=${task.id}" th:text="x"></a>
+        </div>
     </div>
 </body>
 </html>
