@@ -36,7 +36,12 @@ public class ToDoController {
     @GetMapping("/tasks/{id}")
     public ResponseEntity get(@PathVariable int id) {
         Optional<Task> optionalTask = taskRepository.findById(id);
-        if(!optionalTask.isPresent()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        else return new ResponseEntity(optionalTask.get(), HttpStatus.OK);
+        return optionalTask.map(task -> new ResponseEntity(task, HttpStatus.OK))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    }
+
+    @DeleteMapping("/tasks/{id}")
+    public void del(@PathVariable int id) {
+        taskRepository.deleteById(id);
     }
 }

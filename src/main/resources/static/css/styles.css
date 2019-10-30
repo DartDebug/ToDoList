@@ -2,6 +2,18 @@
     display: none;
 }
 
+.task-del:hover {
+    background-color: #fff;
+}
+
+.task-del {
+    padding: 0px 0px;
+    vertical-align: super;
+    background-color: silver;
+    color: black;
+    text-decoration: none;
+}
+
 h1 {
 
     font-size:50px;

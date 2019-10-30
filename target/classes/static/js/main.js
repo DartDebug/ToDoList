@@ -1,6 +1,7 @@
 $(function () {
     const appendTask = function (data) {
-        let taskCode = '<a href="#" class="task-link" data-id="' + data.id + '">' + data.note + '</a><br>';
+        let taskCode = '<a href="#" class="task-link" data-id="' + data.id + '">' + data.note +
+         '</a><a href="#" class="task-del" data-id="' + data.id + '">x</a><br>';
         $('#task-list').append('<div>' + taskCode + '</div>');
         };
 
@@ -62,5 +63,23 @@ $(function () {
             }
         });
         return false;
+    });
+
+    //Remove task
+    $(document).on('click', '.task-del', function(){
+        let link = $(this);
+        let taskId = link.data('id');
+        $.ajax({
+            method: "DELETE",
+            url: '/tasks/' + taskId,
+            success: function(response){
+                link.parent().remove();
+            },
+            error: function(response){
+                if(response.status == 404) {
+                    alert('Файл отсутствует!');
+                }
+            }
+        });
     });
 });
